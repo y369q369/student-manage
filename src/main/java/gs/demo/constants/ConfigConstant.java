@@ -18,4 +18,9 @@ public class ConfigConstant {
      */
     public static String TOKEN_SALT = "1qaz@WSX";
 
+    /**
+     * 默认密码
+     */
+    public static String DEFAULT_PWD = "123456";
+
 }

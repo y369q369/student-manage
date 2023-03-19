@@ -12,7 +12,7 @@ public class ResponseExceptionHandler {
     @ExceptionHandler(value = OperationException.class)
     public ResponseResult handlerOperationException(OperationException ex) {
         log.warn("【操作异常】", ex);
-        return ResponseResult.fail(ex.getResponseEnum());
+        return ResponseResult.fail(ex.getMessage());
     }
 
     @ExceptionHandler(value = CommonException.class)

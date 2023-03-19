@@ -1,0 +1,74 @@
+package gs.demo.controller;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import gs.demo.constants.ApiConstant;
+import gs.demo.domain.MyPage;
+import gs.demo.domain.SchoolClass;
+import gs.demo.domain.User;
+import gs.demo.response.ResponseResult;
+import gs.demo.ro.ClassRo;
+import gs.demo.service.IClassService;
+import gs.demo.vo.ClassVo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * <p></p>
+ *
+ * @author gs
+ * @since 2023/3/18 20:58
+ */
+@RestController
+@Api( tags = "班级管理" )
+public class ClassController {
+
+    @Resource
+    private IClassService classService;
+
+    @GetMapping(value = ApiConstant.CLASS_PAGE_LIST)
+    @ApiOperation(value = "分页列表", notes = "分页列表")
+    public ResponseResult<IPage<ClassVo>> getClassPageList(ClassRo classRo) {
+        IPage<ClassVo> classPageList = classService.getClassPageList(classRo);
+        return ResponseResult.success(classPageList);
+    }
+
+    @PostMapping(value = ApiConstant.CLASS_ADD)
+    @ApiOperation(value = "新增", notes = "新增")
+    public ResponseResult<String> addClass(@RequestBody SchoolClass schoolClass) {
+        classService.addClass(schoolClass);
+        return ResponseResult.success("新增成功");
+    }
+
+    @GetMapping(value = ApiConstant.CLASS_DETAIL)
+    @ApiOperation(value = "详情", notes = "详情")
+    public ResponseResult<SchoolClass> getClassDetail(@RequestParam("classId") Integer classId) {
+        SchoolClass schoolClass = classService.getClassDetail(classId);
+        return ResponseResult.success(schoolClass);
+    }
+
+    @PutMapping(value = ApiConstant.CLASS_UPDATE)
+    @ApiOperation(value = "修改", notes = "修改")
+    public ResponseResult<String> updateClass(@RequestBody SchoolClass schoolClass) {
+        classService.updateClass(schoolClass);
+        return ResponseResult.success("修改成功");
+    }
+
+    @DeleteMapping(value = ApiConstant.CLASS_DELETE)
+    @ApiOperation(value = "删除", notes = "删除")
+    public ResponseResult<String> deleteClass(@RequestParam("classId") Integer classId) {
+        classService.deleteClass(classId);
+        return ResponseResult.success("删除成功");
+    }
+
+    @GetMapping(value = ApiConstant.CLASS_TEACHER_LIST)
+    @ApiOperation(value = "班主任列表", notes = "班主任列表")
+    public ResponseResult<List<User>> getClassTeacherList(@RequestParam(value = "classId", required = false) Integer classId) {
+        List<User> userList = classService.getClassTeacherList(classId);
+        return ResponseResult.success(userList);
+    }
+
+}

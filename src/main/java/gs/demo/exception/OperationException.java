@@ -12,11 +12,19 @@ import lombok.Data;
 @Data
 public class OperationException extends RuntimeException {
 
-    private ResponseEnum responseEnum;
+    private Integer code = 1;
+
+    private String message;
 
     public OperationException(ResponseEnum responseEnum) {
         super ( responseEnum.getMessage() );
-        this.responseEnum = responseEnum;
+        this.code = responseEnum.getCode();
+        this.message = responseEnum.getMessage();
+    }
+
+    public OperationException(String message) {
+        super ( message );
+        this.message = message;
     }
 
 }

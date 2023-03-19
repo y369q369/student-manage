@@ -23,7 +23,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(jwtInterceptor)
-                .excludePathPatterns("/**/" + ApiConstant.LOGIN_CODE, "/**/" + ApiConstant.USER_LOGIN);
+                .excludePathPatterns("/**/" + ApiConstant.LOGIN_CODE, "/**/" + ApiConstant.USER_LOGIN)
+                .excludePathPatterns("/**/doc.html", "/**/webjars/**", "/**/favicon.ico", "/**/error", "/**/swagger-resources");
     }
 
 }

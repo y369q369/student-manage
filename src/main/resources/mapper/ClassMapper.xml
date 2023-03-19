@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gs.demo.mapper.ClassMapper">
+
+    <select id="getClassPageList" resultType="gs.demo.vo.ClassVo">
+        SELECT
+            c.*, u.name as classTeacherName
+        FROM
+            class c
+        LEFT JOIN user u ON u.id = c.class_teacher_id
+        <where>
+            <if test="param.name != null and param.name != ''">
+                u.NAME LIKE concat('%', #{param.name}, '%')
+            </if>
+            <if test="param.classTeacherName != null and param.classTeacherName != ''">
+                AND c.NAME LIKE concat('%', #{param.classTeacherName}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

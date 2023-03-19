@@ -1,8 +1,13 @@
 package gs.demo.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import gs.demo.domain.MyPage;
 import gs.demo.domain.User;
 import gs.demo.response.ResponseResult;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * <p></p>
@@ -13,5 +18,23 @@ import gs.demo.response.ResponseResult;
 public interface IUserService extends IService<User> {
 
     ResponseResult<User> getUserInfo();
+
+    IPage<User> getUserPageList(User user, MyPage myPage);
+
+    ResponseResult<User> getUserDetail(Integer userId);
+
+    void batchAddUser(List<User> userList);
+
+    void updateUser(User user);
+
+    void resetPwd(Integer userId);
+
+    void delete(Integer userId);
+
+    void batchDelete(List<Integer> userIdList);
+
+    void importUser(MultipartFile file);
+
+    void exportUser(User user);
 
 }

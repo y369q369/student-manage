@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gs.demo.mapper.WorkMapper">
+
+    <select id="selectPageList" resultType="gs.demo.vo.WorkPageListVo">
+        SELECT
+            w.*, u.name as userName
+        FROM
+            WORK w,
+            USER u
+        WHERE
+            w.user_id = u.id
+          AND w.COMPLETION_LEVEL = #{param.completionLevel}
+          AND w.statistics_time BETWEEN #{param.statisticsTimeSt} AND #{param.statisticsTimeEt}
+          AND u.name like concat('%', #{param.userName}, '%')
+    </select>
+
+    <insert id="batchAdd">
+        insert into work(user_id, completion_level, statistics_time) value
+        <foreach collection="list" item="item" separator=",">
+            (#{item.userId}, #{item.completionLevel}, #{item.statisticsTime})
+        </foreach>
+    </insert>
+
+</mapper>

@@ -2,23 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="gs.demo.mapper.WorkMapper">
 
-    <select id="selectPageList" resultType="gs.demo.vo.WorkPageListVo">
+    <select id="selectPageList" resultType="gs.demo.vo.WorkCompletionPageListVo">
         SELECT
-            w.*, u.name as userName
+            w.*,
+            c.NAME AS className,
+            u.NAME AS studentName
         FROM
-            WORK w,
-            USER u
-        WHERE
-            w.user_id = u.id
-          AND w.COMPLETION_LEVEL = #{param.completionLevel}
-          AND w.statistics_time BETWEEN #{param.statisticsTimeSt} AND #{param.statisticsTimeEt}
-          AND u.name like concat('%', #{param.userName}, '%')
+            work_completion w
+                LEFT JOIN class c ON w.class_id = c.id
+                LEFT JOIN USER u ON w.student_id = u.id
+        <where>
+            <if test="param.statisticsTimeSt != null and param.statisticsTimeEt != null">
+                AND w.statistics_time BETWEEN #{param.statisticsTimeSt} AND #{param.statisticsTimeEt}
+            </if>
+            <if test="param.completionLevel != null">
+                AND w.COMPLETION_LEVEL = #{param.completionLevel}
+            </if>
+            <if test="param.classId != null">
+                AND w.class_id = #{param.classId}
+            </if>
+            <if test="param.studentName != null and param.studentName != ''">
+                AND u.name like concat('%', #{param.studentName}, '%')
+            </if>
+        </where>
     </select>
 
     <insert id="batchAdd">
-        insert into work(user_id, completion_level, statistics_time) value
+        insert into work_completion(student_id, class_id, completion_level, statistics_time) value
         <foreach collection="list" item="item" separator=",">
-            (#{item.userId}, #{item.completionLevel}, #{item.statisticsTime})
+            (#{item.studentId}, #{item.classId}, #{item.completionLevel}, #{item.statisticsTime})
         </foreach>
     </insert>
 

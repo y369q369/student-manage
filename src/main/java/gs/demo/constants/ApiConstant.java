@@ -9,35 +9,32 @@ package gs.demo.constants;
 public interface ApiConstant {
 
     /** 验证码 */
-    String LOGIN_CODE = "login/code";
+    String IDENTIFYING_CODE = "identifyingCode";
     /** 登录 */
-    String USER_LOGIN = "login";
+    String LOGIN = "login";
 
-    /** 用户信息 */
-    String USER_INFO = "user/info";
-    String USER_PAGE_LIST = "user/pageList";
-    String USER_DETAIL = "user/detail";
-    String USER_BATCH_ADD = "user/batchAdd";
-    String USER_EDIT = "user/edit";
-    String USER_RESET_PWD = "user/restPwd";
-    String USER_DELETE = "user/delete";
-    String USER_BATCH_DELETE = "user/batchDelete";
-    String USER_IMPORT = "user/import";
-    String USER_EXPORT = "user/export";
+    /** 通用 */
+    String LIST = "list";
+    String PAGE_LIST = "pageList";
+    String ADD = "add";
+    String DETAIL = "detail";
+    String UPDATE = "update";
+    String DELETE = "delete";
+    String BATCH_ADD = "batchAdd";
+    String BATCH_DELETE = "batchDelete";
+    String IMPORT = "import";
+    String EXPORT = "export";
+
+    /** 用户 */
+    String USER_INFO = "info";
+    String USER_RESET_PWD = "restPwd";
 
     /** 班级信息 */
-    String CLASS_PAGE_LIST = "class/pageList";
-    String CLASS_ADD = "class/add";
-    String CLASS_DETAIL = "class/detail";
-    String CLASS_UPDATE = "class/update";
-    String CLASS_DELETE = "class/delete";
-    String CLASS_TEACHER_LIST = "class/teacherList";
+    String CLASS_TEACHER_LIST = "teacherList";
 
     /** 班级 - 学生 关系 */
-    String CLASS_STUDENT_PAGE_LIST = "classStudent/pageList";
-    String CLASS_STUDENT_BATCH_OPERATE = "classStudent/batchOperate";
-    String CLASS_STUDENT_LIST = "classStudent/list";
-    String CLASS_STUDENT_OPERATE_STUDENT_LIST = "classStudent/operateStudentList";
-    String CLASS_STUDENT_BATCH_DELETE = "classStudent/batchDelete";
+    String CLASS_STUDENT_BATCH_OPERATE = "batchOperate";
+    String CLASS_STUDENT_STUDENT_LIST = "studentList";
+    String CLASS_STUDENT_OPERATE_STUDENT_LIST = "operateStudentList";
 
 }

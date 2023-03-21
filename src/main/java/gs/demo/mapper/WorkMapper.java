@@ -3,9 +3,9 @@ package gs.demo.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import gs.demo.domain.Work;
+import gs.demo.domain.WorkCompletion;
 import gs.demo.ro.WorkMyPageListRo;
-import gs.demo.vo.WorkPageListVo;
+import gs.demo.vo.WorkCompletionPageListVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -16,10 +16,10 @@ import java.util.List;
  * @author gs
  * @since 2023/3/16 09:25
  */
-public interface WorkMapper extends BaseMapper<Work> {
+public interface WorkMapper extends BaseMapper<WorkCompletion> {
 
-    IPage<WorkPageListVo> selectPageList(@Param("page") Page<WorkPageListVo> page, @Param("param") WorkMyPageListRo param);
+    IPage<WorkCompletionPageListVo> selectPageList(@Param("page") Page<WorkCompletionPageListVo> page, @Param("param") WorkMyPageListRo param);
 
-    void batchAdd(@Param("list") List<Work> list);
+    void batchAdd(@Param("list") List<WorkCompletion> list);
 
 }

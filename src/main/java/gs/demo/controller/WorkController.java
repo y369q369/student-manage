@@ -1,17 +1,18 @@
 package gs.demo.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import gs.demo.domain.Work;
+import gs.demo.constants.ApiConstant;
+import gs.demo.domain.WorkCompletion;
 import gs.demo.response.ResponseResult;
+import gs.demo.ro.CommonWorkRo;
 import gs.demo.ro.WorkMyPageListRo;
 import gs.demo.service.IWorkService;
-import gs.demo.vo.WorkPageListVo;
+import gs.demo.vo.WorkCompletionPageListVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * <p>作业分页列表</p>
@@ -27,38 +28,31 @@ public class WorkController {
     @Resource
     private IWorkService workService;
 
-    @PostMapping(value = "pageList")
+    @GetMapping(value = ApiConstant.PAGE_LIST)
     @ApiOperation(value = "分页列表", notes = "分页列表")
-    public ResponseResult<IPage<WorkPageListVo>> getPageList(WorkMyPageListRo workPageListRo) {
-        IPage<WorkPageListVo> workPageListVoIPage = workService.getPageList(workPageListRo);
+    public ResponseResult<IPage<WorkCompletionPageListVo>> getPageList(WorkMyPageListRo workPageListRo) {
+        IPage<WorkCompletionPageListVo> workPageListVoIPage = workService.getPageList(workPageListRo);
         return ResponseResult.success(workPageListVoIPage);
     }
 
-    @PostMapping(value = "add")
-    @ApiOperation(value = "添加", notes = "批量添加")
-    public ResponseResult<String> add(@RequestBody Work work) {
-        workService.add(work);
-        return ResponseResult.success("添加成功");
-    }
-
-    @PostMapping(value = "batchAdd")
+    @PostMapping(value = ApiConstant.BATCH_ADD)
     @ApiOperation(value = "批量添加", notes = "批量添加")
-    public ResponseResult<String> batchAdd(@RequestBody List<Work> workList) {
-        workService.batchAdd(workList);
+    public ResponseResult<String> batchAdd(@RequestBody CommonWorkRo workRo) {
+        workService.batchAdd(workRo.getWorkList());
         return ResponseResult.success("添加成功");
     }
 
-    @PutMapping(value = "update")
+    @PutMapping(value = ApiConstant.UPDATE)
     @ApiOperation(value = "修改", notes = "修改")
-    public ResponseResult<String> update(@RequestBody Work work) {
-        workService.update(work);
+    public ResponseResult<String> update(@RequestBody WorkCompletion workCompletion) {
+        workService.update(workCompletion);
         return ResponseResult.success("修改成功");
     }
 
-    @DeleteMapping(value = "batchDelete")
+    @DeleteMapping(value = ApiConstant.BATCH_DELETE)
     @ApiOperation(value = "批量删除", notes = "批量删除")
-    public ResponseResult<String> batchDelete(@RequestBody List<Integer> workIdList) {
-        workService.batchDelete(workIdList);
+    public ResponseResult<String> batchDelete(@RequestBody CommonWorkRo workRo) {
+        workService.batchDelete(workRo.getWorkIdList());
         return ResponseResult.success("删除成功");
     }
 

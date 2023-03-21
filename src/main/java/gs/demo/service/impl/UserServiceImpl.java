@@ -78,10 +78,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         } else {
             List<String> accountList = new ArrayList<>();
             userList.forEach(item -> {
-                if (StrUtil.isBlank(item.getName()) || StrUtil.isBlank(item.getAccount()) || StrUtil.isBlank(item.getPassword())) {
+                if (StrUtil.isBlank(item.getName()) || StrUtil.isBlank(item.getAccount())) {
                     throw new OperationException("用户列表数据存在异常");
                 } else {
-                    item.setPassword(DigestUtil.md5Hex(item.getPassword()));
+                    item.setPassword(DigestUtil.md5Hex(ConfigConstant.DEFAULT_PWD));
                     accountList.add(item.getAccount());
                 }
             });

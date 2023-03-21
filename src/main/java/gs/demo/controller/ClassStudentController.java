@@ -23,12 +23,13 @@ import java.util.List;
  */
 @RestController
 @Api( tags = "班级 - 学生 关系" )
+@RequestMapping("classStudent")
 public class ClassStudentController {
 
     @Resource
     private IClassStudentService classStudentService;
 
-    @GetMapping(value = ApiConstant.CLASS_STUDENT_PAGE_LIST)
+    @GetMapping(value = ApiConstant.PAGE_LIST)
     @ApiOperation(value = "学生分页列表", notes = "学生分页列表")
     public ResponseResult<IPage<User>> getStudentPageList(ClassStudentRo classStudentRo) {
         IPage<User> userPageList = classStudentService.getStudentPageList(classStudentRo);
@@ -42,8 +43,8 @@ public class ClassStudentController {
         return ResponseResult.success("班级 - 学生 维护完成");
     }
 
-    @GetMapping(value = ApiConstant.CLASS_STUDENT_LIST)
-    @ApiOperation(value = "学生列表", notes = "学生列表")
+    @GetMapping(value = ApiConstant.CLASS_STUDENT_STUDENT_LIST)
+    @ApiOperation(value = "班级内所有学生列表", notes = "班级内所有学生列表")
     public ResponseResult<List<User>> getStudentList(@RequestParam(value = "classId") Integer classId) {
         List<User> studentList = classStudentService.getStudentList(classId);
         return ResponseResult.success(studentList);
@@ -56,7 +57,7 @@ public class ClassStudentController {
         return ResponseResult.success(userPageList);
     }
 
-    @DeleteMapping(value = ApiConstant.CLASS_STUDENT_BATCH_DELETE)
+    @DeleteMapping(value = ApiConstant.BATCH_DELETE)
     @ApiOperation(value = "批量删除班级-学生关系", notes = "批量删除班级-学生关系")
     public ResponseResult<String> batchDeleteStudent(@RequestBody ClassStudentRo classStudentRo) {
         classStudentService.batchDeleteStudent(classStudentRo);

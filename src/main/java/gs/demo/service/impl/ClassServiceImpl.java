@@ -44,8 +44,7 @@ public class ClassServiceImpl implements IClassService {
     @Override
     public IPage<ClassVo> getClassPageList(ClassRo classRo) {
         Page<ClassVo> page = new Page<>(classRo.getPageNo(), classRo.getPageSize());
-        IPage<ClassVo> classPageList = classMapper.getClassPageList(page, classRo);
-        return classPageList;
+        return classMapper.getClassPageList(page, classRo);
     }
 
     @Override
@@ -82,6 +81,11 @@ public class ClassServiceImpl implements IClassService {
                 .eq(User::getIdentity, IdentityEnum.TEACHER.getCode())
                 .notIn(CollUtil.isNotEmpty(teacherIdSet), User::getId, teacherIdSet));
 
+    }
+
+    @Override
+    public List<SchoolClass> getClassList() {
+        return classMapper.selectList(null);
     }
 
 }

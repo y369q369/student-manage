@@ -2,11 +2,11 @@ package gs.demo.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import gs.demo.domain.Work;
+import gs.demo.domain.WorkCompletion;
 import gs.demo.mapper.WorkMapper;
 import gs.demo.ro.WorkMyPageListRo;
 import gs.demo.service.IWorkService;
-import gs.demo.vo.WorkPageListVo;
+import gs.demo.vo.WorkCompletionPageListVo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,25 +25,24 @@ public class IWorkServiceImpl implements IWorkService {
     private WorkMapper workMapper;
 
     @Override
-    public IPage<WorkPageListVo> getPageList(WorkMyPageListRo workPageListRo) {
-        Page<WorkPageListVo> page = new Page<>(workPageListRo.getPageNo(), workPageListRo.getPageSize());
-        IPage<WorkPageListVo> pageListVoIPage = workMapper.selectPageList(page, workPageListRo);
-        return pageListVoIPage;
+    public IPage<WorkCompletionPageListVo> getPageList(WorkMyPageListRo workPageListRo) {
+        Page<WorkCompletionPageListVo> page = new Page<>(workPageListRo.getPageNo(), workPageListRo.getPageSize());
+        return workMapper.selectPageList(page, workPageListRo);
     }
 
     @Override
-    public void add(Work work) {
-        workMapper.insert(work);
+    public void add(WorkCompletion workCompletion) {
+        workMapper.insert(workCompletion);
     }
 
     @Override
-    public void batchAdd(List<Work> workList) {
-        workMapper.batchAdd(workList);
+    public void batchAdd(List<WorkCompletion> workCompletionList) {
+        workMapper.batchAdd(workCompletionList);
     }
 
     @Override
-    public void update(Work work) {
-        workMapper.updateById(work);
+    public void update(WorkCompletion workCompletion) {
+        workMapper.updateById(workCompletion);
     }
 
     @Override

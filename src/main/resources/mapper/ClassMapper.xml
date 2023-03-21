@@ -10,10 +10,10 @@
         LEFT JOIN user u ON u.id = c.class_teacher_id
         <where>
             <if test="param.name != null and param.name != ''">
-                u.NAME LIKE concat('%', #{param.name}, '%')
+                AND c.NAME LIKE concat('%', #{param.name}, '%')
             </if>
             <if test="param.classTeacherName != null and param.classTeacherName != ''">
-                AND c.NAME LIKE concat('%', #{param.classTeacherName}, '%')
+                AND u.NAME LIKE concat('%', #{param.classTeacherName}, '%')
             </if>
         </where>
     </select>

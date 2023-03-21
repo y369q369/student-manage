@@ -28,4 +28,6 @@ public interface IClassService{
 
     List<User> getClassTeacherList(Integer classId);
 
+    List<SchoolClass> getClassList();
+
 }

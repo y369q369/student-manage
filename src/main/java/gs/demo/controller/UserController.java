@@ -24,6 +24,7 @@ import java.util.List;
  */
 @RestController
 @Api( tags = "用户管理" )
+@RequestMapping("user")
 public class UserController {
 
     @Resource
@@ -35,27 +36,27 @@ public class UserController {
         return userService.getUserInfo();
     }
 
-    @GetMapping(value = ApiConstant.USER_PAGE_LIST)
+    @GetMapping(value = ApiConstant.PAGE_LIST)
     @ApiOperation(value = "分页列表", notes = "分页列表")
     public ResponseResult<IPage<User>> getUserPageList(User user, MyPage myPage) {
         IPage<User> userPageList = userService.getUserPageList(user, myPage);
         return ResponseResult.success(userPageList);
     }
 
-    @GetMapping(value = ApiConstant.USER_DETAIL)
+    @GetMapping(value = ApiConstant.DETAIL)
     @ApiOperation(value = "用户详细信息", notes = "用户详细信息")
     public ResponseResult<User> getUserDetail(@RequestParam("userId") Integer userId) {
         return userService.getUserDetail(userId);
     }
 
-    @PostMapping(value = ApiConstant.USER_BATCH_ADD)
+    @PostMapping(value = ApiConstant.BATCH_ADD)
     @ApiOperation(value = "批量新增", notes = "批量新增")
     public ResponseResult<String> batchAddUser(@RequestBody CommonUserRo userRo) {
         userService.batchAddUser(userRo.getUserList());
         return ResponseResult.success("用户新增成功");
     }
 
-    @PutMapping(value = ApiConstant.USER_EDIT)
+    @PutMapping(value = ApiConstant.UPDATE)
     @ApiOperation(value = "修改", notes = "修改")
     public ResponseResult<String> update(@RequestBody User user) {
         userService.updateUser(user);
@@ -69,21 +70,21 @@ public class UserController {
         return ResponseResult.success("密码重置成功");
     }
 
-    @DeleteMapping(value = ApiConstant.USER_DELETE)
+    @DeleteMapping(value = ApiConstant.DELETE)
     @ApiOperation(value = "删除", notes = "删除")
     public ResponseResult<String> delete(@RequestBody CommonUserRo userRo) {
         userService.delete(userRo.getUserId());
         return ResponseResult.success("用户删除成功");
     }
 
-    @DeleteMapping(value = ApiConstant.USER_BATCH_DELETE)
+    @DeleteMapping(value = ApiConstant.BATCH_DELETE)
     @ApiOperation(value = "批量删除", notes = "批量删除")
     public ResponseResult<String> batchDelete(@RequestBody CommonUserRo userRo) {
         userService.batchDelete(userRo.getUserIdList());
         return ResponseResult.success("用户删除成功");
     }
 
-    @PostMapping(value = ApiConstant.USER_IMPORT)
+    @PostMapping(value = ApiConstant.IMPORT)
     @ApiOperation(value = "导入", notes = "导入")
     @ApiImplicitParam(name = "file", value = "表格", required = true, dataType = "__file")
     public ResponseResult<String> importUser(@RequestParam("file") MultipartFile file) {
@@ -91,7 +92,7 @@ public class UserController {
         return ResponseResult.success("导入成功");
     }
 
-    @GetMapping(value = ApiConstant.USER_EXPORT, produces = "application/octet-stream")
+    @GetMapping(value = ApiConstant.EXPORT, produces = "application/octet-stream")
     @ApiOperation(value = "导出", notes = "导出")
     public void exportUser(User user) {
         userService.exportUser(user);

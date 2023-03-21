@@ -34,7 +34,7 @@ public class LoginController {
     @Resource
     private HttpSession session;
 
-    @GetMapping(value = ApiConstant.LOGIN_CODE)
+    @GetMapping(value = ApiConstant.IDENTIFYING_CODE)
     @ApiOperation(value = "获取验证码", notes = "获取验证码")
     public ResponseResult<String> getCode() {
         // 利用 hutool 工具，生成验证码图片资源
@@ -46,11 +46,10 @@ public class LoginController {
         return ResponseResult.success(captcha.getImageBase64Data());
     }
 
-    @PostMapping(value = ApiConstant.USER_LOGIN)
+    @PostMapping(value = ApiConstant.LOGIN)
     @ApiOperation(value = "登录", notes = "登录")
     public ResponseResult<JSONObject> login(@Valid @RequestBody LoginRo loginRo) {
         return loginService.login(loginRo);
     }
-
 
 }

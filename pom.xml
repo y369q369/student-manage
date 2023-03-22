@@ -17,7 +17,13 @@
     <description>学生管理</description>
 
     <properties>
+        <!-- 程序启动入口 -->
+        <main.class>gs.demo.StudentManageApplication</main.class>
+        <!-- 指定打包目录： target/jar -->
+        <package.direction>${project.build.directory}/jar</package.direction>
         <java.version>1.8</java.version>
+
+        <!-- 版本 -->
         <knife4j.starter.version>2.0.9</knife4j.starter.version>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <mysql-connector-java.version>8.0.27</mysql-connector-java.version>
@@ -106,19 +112,93 @@
 
     </dependencies>
 
-
+    <!--多模块打包：只需在启动类所在模块的POM文件：指定打包插件 -->
     <build>
+        <!-- 打包后的文件名 -->
+        <finalName>student-manage</finalName>
+
         <plugins>
+            <!-- 打jar包：指定入口类 -->
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
+                    <outputDirectory>${package.direction}</outputDirectory>
+                    <archive>
+                        <manifest>
+                            <!--指定入口类 -->
+                            <mainClass>${main.class}</mainClass>
+                            <addClasspath>true</addClasspath>
+                            <!--MANIFEST.MF 中 Class-Path 加入前缀 -->
+                            <classpathPrefix>lib/</classpathPrefix>
+                        </manifest>
+                    </archive>
                     <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
+                        <exclude>*.properties</exclude>
+                        <exclude>*.yaml</exclude>
+                        <exclude>*.yml</exclude>
+                        <exclude>*.xml</exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+
+            <!-- 复制依赖到lib -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${package.direction}/lib</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- 复制配置文件到config -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${package.direction}/config</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/resources</directory>
+                                    <includes>
+                                        <exclude>*.properties</exclude>
+                                        <exclude>*.yaml</exclude>
+                                        <exclude>*.yml</exclude>
+                                        <exclude>*.xml</exclude>
+                                    </includes>
+                                    <!--<filtering>true</filtering>-->
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- 去除单元测试用例打包 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
                 </configuration>
             </plugin>
         </plugins>

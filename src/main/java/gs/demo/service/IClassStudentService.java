@@ -24,5 +24,4 @@ public interface IClassStudentService extends IService<ClassStudent> {
 
     List<User> getOperateStudentList(Integer classId);
 
-    void batchDeleteStudent(ClassStudentRo classStudentRo);
 }

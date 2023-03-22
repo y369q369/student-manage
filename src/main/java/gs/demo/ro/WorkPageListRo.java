@@ -18,10 +18,13 @@ import java.time.LocalDate;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class WorkMyPageListRo extends MyPage {
+public class WorkPageListRo extends MyPage {
 
     @ApiModelProperty("班级")
     private Integer classId;
+
+    @ApiModelProperty("课程")
+    private Integer courseId;
 
     @ApiModelProperty("学生")
     private String studentName;

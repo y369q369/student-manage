@@ -5,7 +5,7 @@ import gs.demo.constants.ApiConstant;
 import gs.demo.domain.MyPage;
 import gs.demo.domain.User;
 import gs.demo.response.ResponseResult;
-import gs.demo.ro.CommonUserRo;
+import gs.demo.ro.CommonRo;
 import gs.demo.service.IUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * <p></p>
@@ -45,42 +44,42 @@ public class UserController {
 
     @GetMapping(value = ApiConstant.DETAIL)
     @ApiOperation(value = "用户详细信息", notes = "用户详细信息")
-    public ResponseResult<User> getUserDetail(@RequestParam("userId") Integer userId) {
-        return userService.getUserDetail(userId);
+    public ResponseResult<User> getUserDetail(@RequestParam("id") Integer id) {
+        return ResponseResult.success(userService.getById(id));
     }
 
     @PostMapping(value = ApiConstant.BATCH_ADD)
     @ApiOperation(value = "批量新增", notes = "批量新增")
-    public ResponseResult<String> batchAddUser(@RequestBody CommonUserRo userRo) {
-        userService.batchAddUser(userRo.getUserList());
+    public ResponseResult<String> batchAddUser(@RequestBody CommonRo<User> commonRo) {
+        userService.batchAddUser(commonRo.getDataList());
         return ResponseResult.success("用户新增成功");
     }
 
     @PutMapping(value = ApiConstant.UPDATE)
     @ApiOperation(value = "修改", notes = "修改")
     public ResponseResult<String> update(@RequestBody User user) {
-        userService.updateUser(user);
+        userService.updateById(user);
         return ResponseResult.success("用户修改成功");
     }
 
     @PutMapping(value = ApiConstant.USER_RESET_PWD)
     @ApiOperation(value = "密码重置", notes = "密码重置")
-    public ResponseResult<String> resetPwd(@RequestBody CommonUserRo userRo) {
-        userService.resetPwd(userRo.getUserId());
+    public ResponseResult<String> resetPwd(@RequestBody CommonRo<User> commonRo) {
+        userService.resetPwd(commonRo.getId());
         return ResponseResult.success("密码重置成功");
     }
 
     @DeleteMapping(value = ApiConstant.DELETE)
     @ApiOperation(value = "删除", notes = "删除")
-    public ResponseResult<String> delete(@RequestBody CommonUserRo userRo) {
-        userService.delete(userRo.getUserId());
+    public ResponseResult<String> delete(@RequestBody CommonRo<User> commonRo) {
+        userService.removeById(commonRo.getId());
         return ResponseResult.success("用户删除成功");
     }
 
     @DeleteMapping(value = ApiConstant.BATCH_DELETE)
     @ApiOperation(value = "批量删除", notes = "批量删除")
-    public ResponseResult<String> batchDelete(@RequestBody CommonUserRo userRo) {
-        userService.batchDelete(userRo.getUserIdList());
+    public ResponseResult<String> batchDelete(@RequestBody CommonRo<User> commonRo) {
+        userService.removeBatchByIds(commonRo.getIdList());
         return ResponseResult.success("用户删除成功");
     }
 

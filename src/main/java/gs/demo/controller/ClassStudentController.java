@@ -1,13 +1,15 @@
 package gs.demo.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import gs.demo.constants.ApiConstant;
+import gs.demo.domain.ClassStudent;
 import gs.demo.domain.User;
 import gs.demo.response.ResponseResult;
-import gs.demo.ro.ClassRo;
 import gs.demo.ro.ClassStudentRo;
+import gs.demo.ro.CommonRo;
 import gs.demo.service.IClassStudentService;
-import gs.demo.vo.ClassVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -59,8 +61,10 @@ public class ClassStudentController {
 
     @DeleteMapping(value = ApiConstant.BATCH_DELETE)
     @ApiOperation(value = "批量删除班级-学生关系", notes = "批量删除班级-学生关系")
-    public ResponseResult<String> batchDeleteStudent(@RequestBody ClassStudentRo classStudentRo) {
-        classStudentService.batchDeleteStudent(classStudentRo);
+    public ResponseResult<String> batchDeleteStudent(@RequestBody CommonRo<ClassStudent> commonRo) {
+        if (CollUtil.isNotEmpty(commonRo.getIdList())) {
+            classStudentService.remove(Wrappers.<ClassStudent>lambdaQuery().in(ClassStudent::getStudentId, commonRo.getIdList()));
+        }
         return ResponseResult.success("删除成功");
     }
 

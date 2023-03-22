@@ -2,11 +2,11 @@ package gs.demo.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import gs.demo.constants.ApiConstant;
-import gs.demo.domain.MyPage;
 import gs.demo.domain.SchoolClass;
 import gs.demo.domain.User;
 import gs.demo.response.ResponseResult;
 import gs.demo.ro.ClassRo;
+import gs.demo.ro.CommonRo;
 import gs.demo.service.IClassService;
 import gs.demo.vo.ClassVo;
 import io.swagger.annotations.Api;
@@ -60,8 +60,8 @@ public class ClassController {
 
     @DeleteMapping(value = ApiConstant.DELETE)
     @ApiOperation(value = "删除", notes = "删除")
-    public ResponseResult<String> deleteClass(@RequestParam("classId") Integer classId) {
-        classService.deleteClass(classId);
+    public ResponseResult<String> deleteClass(@RequestBody CommonRo<SchoolClass> commonRo) {
+        classService.deleteClass(commonRo.getId());
         return ResponseResult.success("删除成功");
     }
 

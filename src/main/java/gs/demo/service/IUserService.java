@@ -25,13 +25,7 @@ public interface IUserService extends IService<User> {
 
     void batchAddUser(List<User> userList);
 
-    void updateUser(User user);
-
     void resetPwd(Integer userId);
-
-    void delete(Integer userId);
-
-    void batchDelete(List<Integer> userIdList);
 
     void importUser(MultipartFile file);
 

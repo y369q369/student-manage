@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gs.demo.mapper.ExaminationResultMapper">
+
+    <select id="getPageList" resultType="gs.demo.vo.ExaminationResultPageVo">
+        SELECT
+            e.*,
+            c.NAME AS className,
+            u.NAME AS studentName,
+            s.NAME AS courseName
+        FROM
+            examination_result e
+            LEFT JOIN class c ON e.class_id = c.id
+            LEFT JOIN USER u ON e.student_id = u.id
+            LEFT JOIN COURSE s ON e.course_id = s.id
+        <where>
+            <if test="param.statisticsTimeSt != null and param.statisticsTimeEt != null">
+                AND e.statistics_time BETWEEN #{param.statisticsTimeSt} AND #{param.statisticsTimeEt}
+            </if>
+            <if test="param.completionLevel != null">
+                AND e.COMPLETION_LEVEL = #{param.completionLevel}
+            </if>
+            <if test="param.classId != null">
+                AND e.class_id = #{param.classId}
+            </if>
+            <if test="param.studentName != null and param.studentName != ''">
+                AND u.name like concat('%', #{param.studentName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getScorePie" resultType="gs.demo.domain.PieData">
+        SELECT
+            CASE
+            WHEN e.score = 100 THEN "100"
+            WHEN e.score >= 90 THEN "90~99"
+            WHEN e.score >= 80 THEN "80~89"
+            WHEN e.score >= 70 THEN "70~79"
+            WHEN e.score >= 60 THEN "60~69" ELSE "60以下"
+            END NAME,
+            count( 0 ) AS VALUE
+        FROM
+        examination_result e
+        LEFT JOIN class c ON e.class_id = c.id
+        LEFT JOIN USER u ON e.student_id = u.id
+        LEFT JOIN COURSE s ON e.course_id = s.id
+        <where>
+            <if test="param.statisticsTimeSt != null and param.statisticsTimeEt != null">
+                AND e.statistics_time BETWEEN #{param.statisticsTimeSt} AND #{param.statisticsTimeEt}
+            </if>
+            <if test="param.completionLevel != null">
+                AND e.COMPLETION_LEVEL = #{param.completionLevel}
+            </if>
+            <if test="param.classId != null">
+                AND e.class_id = #{param.classId}
+            </if>
+            <if test="param.courseId != null">
+                AND e.course_id = #{param.courseId}
+            </if>
+            <if test="param.studentName != null and param.studentName != ''">
+                AND u.name like concat('%', #{param.studentName}, '%')
+            </if>
+        </where>
+        group by NAME
+    </select>
+
+    <insert id="batchAdd">
+        insert into examination_result(student_id, class_id, course_id, examination_time, name, score) value
+        <foreach collection="list" item="item" separator=",">
+            (#{item.studentId}, #{item.classId}, #{item.courseId}, #{item.examinationTime}, #{item.name}, #{item.socre})
+        </foreach>
+    </insert>
+
+</mapper>

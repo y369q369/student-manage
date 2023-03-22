@@ -27,7 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,27 +94,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    @Transactional
-    public void updateUser(User user) {
-        updateById(user);
-    }
-
-    @Override
     public void resetPwd(Integer userId) {
         String pwd = DigestUtil.md5Hex(ConfigConstant.DEFAULT_PWD);
         update(Wrappers.<User>lambdaUpdate().set(User::getPassword, pwd).eq(User::getId, userId));
-    }
-
-    @Override
-    @Transactional
-    public void delete(Integer userId) {
-        removeById(userId);
-    }
-
-    @Override
-    @Transactional
-    public void batchDelete(List<Integer> userIdList) {
-        removeBatchByIds(userIdList);
     }
 
     @Override

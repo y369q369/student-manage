@@ -1,8 +1,10 @@
 package gs.demo.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.IService;
+import gs.demo.domain.PieData;
 import gs.demo.domain.WorkCompletion;
-import gs.demo.ro.WorkMyPageListRo;
+import gs.demo.ro.WorkPageListRo;
 import gs.demo.vo.WorkCompletionPageListVo;
 
 import java.util.List;
@@ -13,16 +15,12 @@ import java.util.List;
  * @author gs
  * @since 2023/3/16 09:24
  */
-public interface IWorkService {
+public interface IWorkService extends IService<WorkCompletion> {
 
-    IPage<WorkCompletionPageListVo> getPageList(WorkMyPageListRo workPageListRo);
+    IPage<WorkCompletionPageListVo> getPageList(WorkPageListRo workPageListRo);
 
-    void add(WorkCompletion workCompletion);
+    List<PieData> getCompletionLevelPie(WorkPageListRo workPageListRo);
 
     void batchAdd(List<WorkCompletion> workCompletionList);
-
-    void update(WorkCompletion workCompletion);
-
-    void batchDelete(List<Integer> workIdList);
 
 }

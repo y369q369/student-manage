@@ -24,17 +24,18 @@ public interface ApiConstant {
     String BATCH_DELETE = "batchDelete";
     String IMPORT = "import";
     String EXPORT = "export";
+    String ECHARTS_PIE = "echarts/pie";
 
     /** 用户 */
     String USER_INFO = "info";
     String USER_RESET_PWD = "restPwd";
 
     /** 班级信息 */
-    String CLASS_TEACHER_LIST = "teacherList";
+    String CLASS_TEACHER_LIST = "teacher/list";
 
     /** 班级 - 学生 关系 */
     String CLASS_STUDENT_BATCH_OPERATE = "batchOperate";
-    String CLASS_STUDENT_STUDENT_LIST = "studentList";
-    String CLASS_STUDENT_OPERATE_STUDENT_LIST = "operateStudentList";
+    String CLASS_STUDENT_STUDENT_LIST = "student/list";
+    String CLASS_STUDENT_OPERATE_STUDENT_LIST = "operateStudent/list";
 
 }

@@ -42,10 +42,9 @@ public class ClassStudentServiceImpl extends ServiceImpl<ClassStudentMapper, Cla
         Set<Integer> studentIdSet = classStudentList.stream().map(ClassStudent::getStudentId).collect(Collectors.toSet());
         Page<User> page = new Page<>(ro.getPageNo(), ro.getPageSize());
         if (CollUtil.isNotEmpty(studentIdSet)) {
-            IPage<User> userPageList = userMapper.selectPage(page, Wrappers.<User>lambdaQuery()
+            return userMapper.selectPage(page, Wrappers.<User>lambdaQuery()
                     .in(User::getId, studentIdSet)
                     .like(StrUtil.isNotEmpty(ro.getStudentName()), User::getName, ro.getStudentName()));
-            return userPageList;
         }
         return page;
     }
@@ -82,13 +81,6 @@ public class ClassStudentServiceImpl extends ServiceImpl<ClassStudentMapper, Cla
     @Override
     public List<User> getOperateStudentList(Integer classId) {
         return classStudentMapper.getOperateStudentList(classId);
-    }
-
-    @Override
-    public void batchDeleteStudent(ClassStudentRo ro) {
-        remove(Wrappers.<ClassStudent>lambdaQuery()
-                .eq(ClassStudent::getClassId, ro.getClassId())
-                .in(ClassStudent::getStudentId, ro.getStudentIdList()));
     }
 
 }

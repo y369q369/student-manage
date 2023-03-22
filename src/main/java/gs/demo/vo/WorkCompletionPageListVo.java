@@ -15,6 +15,9 @@ import lombok.EqualsAndHashCode;
 @Data
 public class WorkCompletionPageListVo extends WorkCompletion {
 
+    @ApiModelProperty("课程")
+    private String courseName;
+
     @ApiModelProperty("班级")
     private String className;
 

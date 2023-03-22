@@ -16,7 +16,7 @@
             user u
             LEFT JOIN class_student cs ON u.id = cs.student_id AND cs.class_id != #{classId}
         WHERE
-            cs.student_id IS NULL
+            u.identity = 0 AND cs.student_id IS NULL
     </select>
 
 </mapper>

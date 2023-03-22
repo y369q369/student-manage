@@ -1,45 +1,42 @@
 package gs.demo.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * <p>作业</p>
- *
  * @author gs
- * @since 2023/3/16 09:19
+ * @since 2023/3/22 11:22
  */
 @Data
-public class WorkCompletion {
+@ApiModel("考试成绩")
+public class ExaminationResult {
 
     @ApiModelProperty("唯一id")
-    @TableId(type = IdType.AUTO)
     private Integer id;
-
-    @ApiModelProperty("学生id")
-    private Integer studentId;
 
     @ApiModelProperty("班级id")
     private Integer classId;
 
+    @ApiModelProperty("学生id")
+    private Integer studentId;
+
     @ApiModelProperty("课程id")
     private Integer courseId;
 
-    @ApiModelProperty("完成情况  0：全部完成  1：完成较好  2：完成较差  3：未完成")
-    private Integer completionLevel;
+    @ApiModelProperty("考试时间")
+    private LocalDateTime examinationTime;
 
-    @ApiModelProperty("统计日期")
-    @DateTimeFormat( pattern = "yyyy-MM-dd" )
-    @JsonFormat( pattern = "yyyy-MM-dd", timezone = "GMT+08:00" )
-    private LocalDate statisticsTime;
+    @ApiModelProperty("测试名称")
+    private String name;
+
+    @ApiModelProperty("分数")
+    private BigDecimal score;
 
     @ApiModelProperty("创建时间")
     @TableField(exist = false)

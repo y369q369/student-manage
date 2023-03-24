@@ -7,6 +7,7 @@ import gs.demo.constants.ApiConstant;
 import gs.demo.response.ResponseResult;
 import gs.demo.ro.LoginRo;
 import gs.demo.service.ILoginService;
+import gs.demo.vo.LoginVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,7 +49,7 @@ public class LoginController {
 
     @PostMapping(value = ApiConstant.LOGIN)
     @ApiOperation(value = "登录", notes = "登录")
-    public ResponseResult<JSONObject> login(@Valid @RequestBody LoginRo loginRo) {
+    public ResponseResult<LoginVo> login(@Valid @RequestBody LoginRo loginRo) {
         return loginService.login(loginRo);
     }
 

@@ -1,10 +1,9 @@
 package gs.demo.service;
 
-import com.alibaba.fastjson2.JSONObject;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import gs.demo.domain.User;
 import gs.demo.response.ResponseResult;
 import gs.demo.ro.LoginRo;
+import gs.demo.vo.LoginVo;
 
 /**
  * <p></p>
@@ -31,6 +30,6 @@ public interface ILoginService {
      * @param loginRo
      * @return
      */
-    ResponseResult<JSONObject> login(LoginRo loginRo);
+    ResponseResult<LoginVo> login(LoginRo loginRo);
 
 }

@@ -14,14 +14,23 @@
             LEFT JOIN USER u ON e.student_id = u.id
             LEFT JOIN COURSE s ON e.course_id = s.id
         <where>
-            <if test="param.statisticsTimeSt != null and param.statisticsTimeEt != null">
-                AND e.statistics_time BETWEEN #{param.statisticsTimeSt} AND #{param.statisticsTimeEt}
+            <if test="param.examinationTimeSt != null and param.examinationTimeEt != null">
+                AND e.examination_time BETWEEN #{param.examinationTimeSt} AND #{param.examinationTimeEt}
             </if>
-            <if test="param.completionLevel != null">
-                AND e.COMPLETION_LEVEL = #{param.completionLevel}
+            <if test="param.operateSymbol != null and param.score != null">
+                AND e.score ${param.operateSymbol} #{param.score}
             </if>
             <if test="param.classId != null">
                 AND e.class_id = #{param.classId}
+            </if>
+            <if test="param.typeList != null and param.typeList.size() > 0">
+                AND e.type in
+                <foreach collection="param.typeList" item="item" separator="," open="(" close=")" >
+                    #{item}
+                </foreach>
+            </if>
+            <if test="param.courseId != null">
+                AND e.course_id = #{param.courseId}
             </if>
             <if test="param.studentName != null and param.studentName != ''">
                 AND u.name like concat('%', #{param.studentName}, '%')
@@ -45,14 +54,20 @@
         LEFT JOIN USER u ON e.student_id = u.id
         LEFT JOIN COURSE s ON e.course_id = s.id
         <where>
-            <if test="param.statisticsTimeSt != null and param.statisticsTimeEt != null">
-                AND e.statistics_time BETWEEN #{param.statisticsTimeSt} AND #{param.statisticsTimeEt}
+            <if test="param.examinationTimeSt != null and param.examinationTimeEt != null">
+                AND e.examination_time BETWEEN #{param.examinationTimeSt} AND #{param.examinationTimeEt}
             </if>
-            <if test="param.completionLevel != null">
-                AND e.COMPLETION_LEVEL = #{param.completionLevel}
+            <if test="param.operateSymbol != null and param.score != null">
+                AND e.score ${param.operateSymbol} #{param.score}
             </if>
             <if test="param.classId != null">
                 AND e.class_id = #{param.classId}
+            </if>
+            <if test="param.typeList != null and param.typeList.size() > 0">
+                AND e.type in
+                <foreach collection="param.typeList" item="item" separator="," open="(" close=")" >
+                    #{item}
+                </foreach>
             </if>
             <if test="param.courseId != null">
                 AND e.course_id = #{param.courseId}
@@ -65,9 +80,9 @@
     </select>
 
     <insert id="batchAdd">
-        insert into examination_result(student_id, class_id, course_id, examination_time, name, score) value
+        insert into examination_result(student_id, class_id, course_id, examination_time, type, score) value
         <foreach collection="list" item="item" separator=",">
-            (#{item.studentId}, #{item.classId}, #{item.courseId}, #{item.examinationTime}, #{item.name}, #{item.socre})
+            (#{item.studentId}, #{item.classId}, #{item.courseId}, #{item.examinationTime}, #{item.type}, #{item.score})
         </foreach>
     </insert>
 

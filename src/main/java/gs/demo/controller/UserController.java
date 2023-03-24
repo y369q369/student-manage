@@ -69,6 +69,13 @@ public class UserController {
         return ResponseResult.success("密码重置成功");
     }
 
+    @PutMapping(value = ApiConstant.USER_UPDATE_PWD)
+    @ApiOperation(value = "修改密码", notes = "修改密码")
+    public ResponseResult<String> updatePwd(@RequestBody User user) {
+        userService.updatePwd(user);
+        return ResponseResult.success("密码修改成功");
+    }
+
     @DeleteMapping(value = ApiConstant.DELETE)
     @ApiOperation(value = "删除", notes = "删除")
     public ResponseResult<String> delete(@RequestBody CommonRo<User> commonRo) {

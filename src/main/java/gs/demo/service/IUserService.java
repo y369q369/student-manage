@@ -21,14 +21,13 @@ public interface IUserService extends IService<User> {
 
     IPage<User> getUserPageList(User user, MyPage myPage);
 
-    ResponseResult<User> getUserDetail(Integer userId);
-
     void batchAddUser(List<User> userList);
 
     void resetPwd(Integer userId);
 
+    void updatePwd(User user);
+
     void importUser(MultipartFile file);
 
     void exportUser(User user);
-
 }

@@ -1,12 +1,18 @@
 package gs.demo.domain;
 
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import gs.demo.excel.ExaminationTypeConvert;
+import gs.demo.excel.SexConvert;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -29,13 +35,21 @@ public class ExaminationResult {
     @ApiModelProperty("课程id")
     private Integer courseId;
 
-    @ApiModelProperty("考试时间")
-    private LocalDateTime examinationTime;
+    @ApiModelProperty("考试日期")
+    @DateTimeFormat( pattern = "yyyy-MM-dd" )
+    @JsonFormat( pattern = "yyyy-MM-dd", timezone = "GMT+08:00" )
+    @ExcelProperty(value = "考试日期", order = 4)
+    @ColumnWidth(20)
+    private LocalDate examinationTime;
 
-    @ApiModelProperty("测试名称")
-    private String name;
+    @ApiModelProperty("类型")
+    @ExcelProperty(value = "类型", converter = ExaminationTypeConvert.class, order = 5)
+    @ColumnWidth(20)
+    private Integer type;
 
     @ApiModelProperty("分数")
+    @ExcelProperty(value = "分数", order = 6)
+    @ColumnWidth(20)
     private BigDecimal score;
 
     @ApiModelProperty("创建时间")

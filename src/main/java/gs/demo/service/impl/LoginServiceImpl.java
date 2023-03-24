@@ -17,6 +17,7 @@ import gs.demo.response.ResponseEnum;
 import gs.demo.response.ResponseResult;
 import gs.demo.ro.LoginRo;
 import gs.demo.service.ILoginService;
+import gs.demo.vo.LoginVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -73,7 +74,7 @@ public class LoginServiceImpl implements ILoginService {
 
 
     @Override
-    public ResponseResult<JSONObject> login(LoginRo loginRo) {
+    public ResponseResult<LoginVo> login(LoginRo loginRo) {
         String code = (String) session.getAttribute("code");
         if (StrUtil.isBlank(code) || !code.equals(loginRo.getCode())) {
             return ResponseResult.fail(ResponseEnum.USER_NOT_EXIST);
@@ -87,9 +88,18 @@ public class LoginServiceImpl implements ILoginService {
         session.setAttribute("account", user.getAccount());
         session.setAttribute("user", user);
         String token = getToken(user.getAccount());
+
+        LoginVo loginVo = new LoginVo();
+        loginVo.setToken(token);
+        User userTemp = new User();
+        userTemp.setId(user.getId());
+        userTemp.setIdentity(user.getIdentity());
+        userTemp.setName(user.getName());
+        loginVo.setUser(userTemp);
+
         JSONObject result = new JSONObject();
         result.put("token", token);
-        return ResponseResult.success(result);
+        return ResponseResult.success(loginVo);
     }
 
 }

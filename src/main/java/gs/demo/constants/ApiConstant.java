@@ -28,6 +28,7 @@ public interface ApiConstant {
 
     /** 用户 */
     String USER_INFO = "info";
+    String USER_UPDATE_PWD = "updatePwd";
     String USER_RESET_PWD = "restPwd";
 
     /** 班级信息 */

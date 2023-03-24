@@ -22,7 +22,7 @@ public interface ExaminationResultMapper extends BaseMapper<ExaminationResult> {
 
     IPage<ExaminationResultPageVo> getPageList(@Param("page") Page<ExaminationResultPageVo> page, @Param("param") ExaminationResultPageListRo param);
 
-    List<PieData> getScorePie(@Param("param") WorkPageListRo param);
+    List<PieData> getScorePie(@Param("param") ExaminationResultPageListRo param);
 
     void batchAdd(@Param("list") List<ExaminationResult> list);
 

@@ -23,4 +23,9 @@ public class ConfigConstant {
      */
     public static String DEFAULT_PWD = "123456";
 
+    /**
+     * 导出最大数量
+     */
+    public static Integer EXPORT_MAX_NUM = 3000;
+
 }

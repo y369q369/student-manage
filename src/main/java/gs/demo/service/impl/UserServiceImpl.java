@@ -65,11 +65,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public ResponseResult<User> getUserDetail(Integer userId) {
-        return ResponseResult.success(getById(userId));
-    }
-
-    @Override
     @Transactional
     public void batchAddUser(List<User> userList) {
         if (CollUtil.isEmpty(userList)) {
@@ -97,6 +92,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public void resetPwd(Integer userId) {
         String pwd = DigestUtil.md5Hex(ConfigConstant.DEFAULT_PWD);
         update(Wrappers.<User>lambdaUpdate().set(User::getPassword, pwd).eq(User::getId, userId));
+    }
+
+    @Override
+    public void updatePwd(User user) {
+        if (user.getId() != null && StrUtil.isNotBlank(user.getPassword())) {
+            String pwd = DigestUtil.md5Hex(user.getPassword());
+            update(Wrappers.<User>lambdaUpdate().set(User::getPassword, pwd).eq(User::getId, user.getId()));
+        }
     }
 
     @Override

@@ -11,14 +11,14 @@
         FROM
             work_completion w
                 LEFT JOIN class c ON w.class_id = c.id
-                LEFT JOIN USER u ON w.student_id = u.id
-                LEFT JOIN COURSE s ON w.course_id = s.id
+                LEFT JOIN `user` u ON w.student_id = u.id
+                LEFT JOIN course s ON w.course_id = s.id
         <where>
             <if test="param.statisticsTimeSt != null and param.statisticsTimeEt != null">
                 AND w.statistics_time BETWEEN #{param.statisticsTimeSt} AND #{param.statisticsTimeEt}
             </if>
             <if test="param.completionLevel != null">
-                AND w.COMPLETION_LEVEL = #{param.completionLevel}
+                AND w.completion_level = #{param.completionLevel}
             </if>
             <if test="param.classId != null">
                 AND w.class_id = #{param.classId}
@@ -39,13 +39,13 @@
         FROM
             work_completion w
             LEFT JOIN class c ON w.class_id = c.id
-            LEFT JOIN USER u ON w.student_id = u.id
+            LEFT JOIN `user` u ON w.student_id = u.id
         <where>
             <if test="param.statisticsTimeSt != null and param.statisticsTimeEt != null">
                 AND w.statistics_time BETWEEN #{param.statisticsTimeSt} AND #{param.statisticsTimeEt}
             </if>
             <if test="param.completionLevel != null">
-                AND w.COMPLETION_LEVEL = #{param.completionLevel}
+                AND w.completion_level = #{param.completionLevel}
             </if>
             <if test="param.classId != null">
                 AND w.class_id = #{param.classId}

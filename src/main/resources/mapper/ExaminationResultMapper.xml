@@ -11,8 +11,8 @@
         FROM
             examination_result e
             LEFT JOIN class c ON e.class_id = c.id
-            LEFT JOIN USER u ON e.student_id = u.id
-            LEFT JOIN COURSE s ON e.course_id = s.id
+            LEFT JOIN `user` u ON e.student_id = u.id
+            LEFT JOIN course s ON e.course_id = s.id
         <where>
             <if test="param.examinationTimeSt != null and param.examinationTimeEt != null">
                 AND e.examination_time BETWEEN #{param.examinationTimeSt} AND #{param.examinationTimeEt}
@@ -51,8 +51,8 @@
         FROM
         examination_result e
         LEFT JOIN class c ON e.class_id = c.id
-        LEFT JOIN USER u ON e.student_id = u.id
-        LEFT JOIN COURSE s ON e.course_id = s.id
+        LEFT JOIN `user` u ON e.student_id = u.id
+        LEFT JOIN course s ON e.course_id = s.id
         <where>
             <if test="param.examinationTimeSt != null and param.examinationTimeEt != null">
                 AND e.examination_time BETWEEN #{param.examinationTimeSt} AND #{param.examinationTimeEt}

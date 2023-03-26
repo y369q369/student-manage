@@ -7,7 +7,7 @@
             c.*, u.name as classTeacherName
         FROM
             class c
-        LEFT JOIN user u ON u.id = c.class_teacher_id
+        LEFT JOIN `user` u ON u.id = c.class_teacher_id
         <where>
             <if test="param.name != null and param.name != ''">
                 AND c.NAME LIKE concat('%', #{param.name}, '%')
